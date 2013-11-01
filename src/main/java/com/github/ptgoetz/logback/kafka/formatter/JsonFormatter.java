@@ -61,7 +61,9 @@ public class JsonFormatter implements Formatter {
 					list.add(addExceptions(throwable));
 				}
 			}
-			obj.put("suppressed", list);
+			if (!list.isEmpty()) {
+				obj.put("suppressed", list);
+			}
 		}
 
 		return obj;
