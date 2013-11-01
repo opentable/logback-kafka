@@ -1,53 +1,69 @@
 package com.github.ptgoetz.logback.kafka.formatter;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.classic.spi.StackTraceElementProxy;
 
 public class JsonFormatter implements Formatter {
-    private static final String QUOTE = "\"";
-    private static final String COLON = ":";
-    private static final String COMMA = ",";
+    private String hostname;
 
-    private boolean expectJson = false;
+	public JsonFormatter() {
+		this.hostname = "";
+		try {
+			this.hostname = InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+		}
+	}
 
     public String format(ILoggingEvent event) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        fieldName("level", sb);
-        quote(event.getLevel().levelStr, sb);
-        sb.append(COMMA);
-        fieldName("logger", sb);
-        quote(event.getLoggerName(), sb);
-        sb.append(COMMA);
-        fieldName("timestamp", sb);
-        sb.append(event.getTimeStamp());
-        sb.append(COMMA);
-        fieldName("message", sb);
-        if (this.expectJson) {
-            sb.append(event.getFormattedMessage());
-        } else {
-            quote(event.getFormattedMessage(), sb);
-        }
-
-        sb.append("}");
-        return sb.toString();
+		JSONObject obj = new JSONObject();
+		obj.put("level", event.getLevel().levelStr);
+        obj.put("logger", event.getLoggerName());
+        obj.put("timestamp", event.getTimeStamp());
+        obj.put("hostname", this.hostname);
+        obj.put("message", event.getFormattedMessage());
+		addExceptionsIf(obj, "exceptions", event.getThrowableProxy());
+        return obj.toString();
     }
 
-    private static void fieldName(String name, StringBuilder sb) {
-        quote(name, sb);
-        sb.append(COLON);
-    }
+	private void addExceptionsIf(JSONObject obj, String name, IThrowableProxy proxy) {
+		if (proxy != null) {
+			obj.put(name, addExceptions(proxy));
+		}
+	}
 
-    private static void quote(String value, StringBuilder sb) {
-        sb.append(QUOTE);
-        sb.append(value);
-        sb.append(QUOTE);
-    }
+	private JSONObject addExceptions(IThrowableProxy proxy) {
+		JSONObject obj = new JSONObject();
+		obj.put("exceptionClass", proxy.getClassName());
+		obj.put("exceptionMessage", proxy.getMessage());
 
-    public boolean isExpectJson() {
-        return expectJson;
-    }
+		StackTraceElementProxy[] stackTrace = proxy.getStackTraceElementProxyArray();
+		if (stackTrace != null) {
+			JSONArray list = new JSONArray();
+			for (StackTraceElementProxy trace : stackTrace) {
+				list.add(trace.toString());
+			}
+			obj.put("stacktrace", list);
+		}
 
-    public void setExpectJson(boolean expectJson) {
-        this.expectJson = expectJson;
-    }
+		addExceptionsIf(obj, "cause", proxy.getCause());
+
+		IThrowableProxy[] suppressed = proxy.getSuppressed();
+		if (suppressed != null) {
+			JSONArray list = new JSONArray();
+			for (IThrowableProxy throwable : suppressed) {
+				if (throwable != null) {
+					list.add(addExceptions(throwable));
+				}
+			}
+			obj.put("suppressed", list);
+		}
+
+		return obj;
+	}
 }
