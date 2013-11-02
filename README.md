@@ -1,17 +1,21 @@
 # logback-kafka
 
-
-Logback appenders for logging data to Apache Kafka
+Logback appenders for logging data to Apache Kafka 0.8.0, based on the project at https://github.com/ptgoetz/logback-kafka (which is for Kafka 0.7).
 
 
 ## Maven Dependency
 To use logback-kafka in your project add to following to your pom.xml:
 
 ```xml
+<repository>
+  <id>clojars.org</id>
+  <url>http://clojars.org/repo</url>
+</repository>
+...
 <dependency>
-    <groupId>com.github.ptgoetz</groupId>
-    <artifactId>logback-kafka</artifactId>
-    <version>0.1.0</version>
+  <groupId>org.clojars.brenden</groupId>
+  <artifactId>logback-kafka</artifactId>
+  <version>0.2.7</version>
 </dependency>
 ```
 
@@ -25,7 +29,7 @@ a zookeeper host string, and kafka topic name to log to.
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
     <appender name="KAFKA"
-        class="com.github.ptgoetz.logback.kafka.KafkaAppender">
+        class="org.clojars.brenden.logback.KafkaAppender">
         <topic>mytopic</topic>
         <zookeeperHost>localhost:2181</zookeeperHost>
     </appender>
@@ -43,11 +47,11 @@ behavior by specifying a custom formatter class:
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
     <appender name="KAFKA"
-        class="com.github.ptgoetz.logback.kafka.KafkaAppender">
+        class="org.clojars.brenden.logback.KafkaAppender">
         <topic>foo</topic>
         <zookeeperHost>localhost:2181</zookeeperHost>
         <!-- specify a custom formatter -->
-        <formatter class="com.github.ptgoetz.logback.kafka.formatter.JsonFormatter">
+        <formatter class="org.clojars.brenden.logback.KafkaAppender">
             <!-- 
             Whether we expect the log message to be JSON encoded or not.
             If set to "false", the log message will be treated as a string, 
@@ -65,10 +69,10 @@ behavior by specifying a custom formatter class:
 
 
 
-Formatters simply need to implement the `com.github.ptgoetz.logback.kafka.formatter.Formatter` interface:
+Formatters simply need to implement the `org.clojars.brenden.logback.formatter.Formatter` interface:
 
 ```java
-package com.github.ptgoetz.logback.kafka.formatter;
+package org.clojars.brenden.logback.formatter;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 

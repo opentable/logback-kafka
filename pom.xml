@@ -3,7 +3,7 @@
 
   <groupId>org.clojars.brenden</groupId>
   <artifactId>logback-kafka</artifactId>
-  <version>0.2.6-SNAPSHOT</version>
+  <version>0.2.8-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -13,7 +13,6 @@
   </parent>
 
   <name>logback-kafka</name>
-  <url>http://maven.apache.org</url>
 
   <distributionManagement>
     <repository>
@@ -57,10 +56,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.googlecode.json-simple</groupId>
-      <artifactId>json-simple</artifactId>
-      <version>1.1</version>
-      <scope>provided</scope>
+      <groupId>net.minidev</groupId>
+      <artifactId>json-smart</artifactId>
+      <version>2.0-RC3</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>

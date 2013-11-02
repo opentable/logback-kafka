@@ -1,4 +1,4 @@
-package com.github.ptgoetz.logback.kafka.formatter;
+package org.clojars.brenden.logback.formatter;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
@@ -11,8 +11,8 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
  */
 public class MessageFormatter implements Formatter {
 
-    public String format(ILoggingEvent event) {
-        return event.getFormattedMessage();
-    }
+  public String format(ILoggingEvent event) {
+    return event.getFormattedMessage();
+  }
 
 }
