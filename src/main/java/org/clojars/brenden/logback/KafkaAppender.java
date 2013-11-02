@@ -56,7 +56,7 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
     Properties props = new Properties();
     props.put("metadata.broker.list", this.brokerList);
     props.put("producer.type", "async");
-    props.put("request.required.acks", "0");
+    props.put("request.required.acks", "1");
     props.put("compression.codec", "snappy");
     props.put("topic.metadata.refresh.interval.ms", "60000");
     props.put("serializer.class", "kafka.serializer.StringEncoder");
