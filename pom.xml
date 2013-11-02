@@ -65,7 +65,8 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.0.13</version>
+			<version>1.0.6</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
@@ -92,14 +93,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.sgroschupf</groupId>
-			<artifactId>zkclient</artifactId>
-			<version>0.1</version>
-		</dependency>
-		<dependency>
 			<artifactId>slf4j-api</artifactId>
 			<groupId>org.slf4j</groupId>
 			<version>1.7.5</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
