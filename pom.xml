@@ -3,14 +3,8 @@
 
   <groupId>org.clojars.brenden</groupId>
   <artifactId>logback-kafka</artifactId>
-  <version>0.2.8-SNAPSHOT</version>
+  <version>0.2.9</version>
   <packaging>jar</packaging>
-
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
 
   <name>logback-kafka</name>
 
