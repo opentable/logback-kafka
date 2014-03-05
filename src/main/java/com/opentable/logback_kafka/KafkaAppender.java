@@ -1,4 +1,4 @@
-package org.clojars.brenden.logback;
+package com.opentable.logback_kafka;
 
 import java.util.Properties;
 
@@ -12,8 +12,8 @@ import kafka.cluster.Broker;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
 
-import org.clojars.brenden.logback.formatter.Formatter;
-import org.clojars.brenden.logback.formatter.MessageFormatter;
+import com.opentable.logback_kafka.formatter.Formatter;
+import com.opentable.logback_kafka.formatter.MessageFormatter;
 
 public class KafkaAppender extends AppenderBase<ILoggingEvent> {
 

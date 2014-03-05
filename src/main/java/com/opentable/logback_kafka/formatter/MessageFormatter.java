@@ -1,4 +1,4 @@
-package org.clojars.brenden.logback.formatter;
+package com.opentable.logback_kafka.formatter;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
